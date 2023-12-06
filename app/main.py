@@ -1,10 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from httpcore import Origin
-from pydantic_settings import BaseSettings
+
 from . import models
 from .database import engine
 from .routers import post, user, auth, vote
+from .config import settings
 
 
 # models.Base.metadata.create_all(bind=engine)
@@ -29,6 +29,6 @@ app.include_router(post.router)
 app.include_router(vote.router)
 
 
-@app.get('/')
+@app.get('/', status_code=status.HTTP_200_OK,)
 def root():
-    return {'message': 'Welcome to my api !'}
+    return {'message': 'Hello world!'}
